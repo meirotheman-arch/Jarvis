@@ -1,37 +1,44 @@
 # Jarvis
 
-My personal AI assistant, built on top of [OpenJarvis](https://github.com/open-jarvis/OpenJarvis)
-(Apache-2.0). It runs locally with Ollama by default; no usage analytics are sent.
+Mon assistant personnel, construit sur [OpenJarvis](https://github.com/open-jarvis/OpenJarvis)
+(licence Apache-2.0). Il fonctionne en local avec Ollama et répond en français.
+Aucune donnée d'utilisation n'est envoyée.
 
-## Setup
+## Installation
 
-Requirements: Python 3.11–3.13, [uv](https://docs.astral.sh/uv/), and [Ollama](https://ollama.com).
+Prérequis : Python 3.11 à 3.13, [uv](https://docs.astral.sh/uv/) et [Ollama](https://ollama.com).
 
 ```bash
 ollama pull qwen3.5:4b
 uv sync --extra dev
 ```
 
-## Use
+## Utilisation
 
 ```bash
-uv run myjarvis ask "What time is it in Tokyo?"
-uv run myjarvis chat
-uv run myjarvis --model qwen3.5:9b chat
+uv run jarvis-ai demande "Quelle heure est-il à Montréal ?"
+uv run jarvis-ai discute
+uv run jarvis-ai --model qwen3.5:9b discute
 ```
 
-## Layout
+La commande s'appelle `jarvis-ai` et non `jarvis`, car OpenJarvis installe déjà sa
+propre commande `jarvis` (toujours disponible à côté).
 
-| Path | What it is |
-|------|------------|
-| `config/config.toml` | Engine, model, agent, enabled tools, system prompt |
-| `src/myjarvis/tools.py` | Custom tools (registered into OpenJarvis's `ToolRegistry`) |
-| `src/myjarvis/cli.py` | `myjarvis` command |
+## Organisation
+
+| Chemin | Contenu |
+|--------|---------|
+| `config/config.toml` | Moteur, modèle, agent, outils activés, consignes de Jarvis |
+| `src/jarvis/tools.py` | Outils personnalisés (enregistrés dans le `ToolRegistry` d'OpenJarvis) |
+| `src/jarvis/cli.py` | La commande `jarvis-ai` |
 | `tests/` | Tests (`uv run pytest`) |
 
-## Adding a tool
+## Ajouter un outil
 
-1. Add a `BaseTool` subclass decorated with `@ToolRegistry.register("name")` in `src/myjarvis/tools.py`.
-2. Add `name` to `agent.tools` in `config/config.toml`.
+1. Dans `src/jarvis/tools.py`, ajoutez une sous-classe de `BaseTool` décorée par
+   `@ToolRegistry.register("nom")`.
+2. Ajoutez `nom` à `agent.tools` dans `config/config.toml`.
 
-OpenJarvis is pinned to a specific commit in `pyproject.toml`; change the hash to upgrade.
+L'outil `web_search` accède à Internet : retirez-le de `agent.tools` pour un Jarvis entièrement hors ligne.
+
+OpenJarvis est épinglé sur un commit précis dans `pyproject.toml` ; changez le hash pour le mettre à jour.

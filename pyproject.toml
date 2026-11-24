@@ -3,13 +3,13 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "myjarvis"
+name = "jarvis"
 version = "0.1.0"
-description = "My personal Jarvis assistant, built on OpenJarvis"
+description = "Mon assistant personnel Jarvis, construit sur OpenJarvis"
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
 dependencies = [
-    # Pinned to a known commit; bump deliberately.
+    # Épinglé sur un commit précis ; à mettre à jour volontairement.
     "OpenJarvis @ git+https://github.com/open-jarvis/OpenJarvis@ae36ac97e9adcd55e8cf6e98b6274948ab28134c",
 ]
 
@@ -17,10 +17,10 @@ dependencies = [
 dev = ["pytest>=8"]
 
 [project.scripts]
-myjarvis = "myjarvis.cli:main"
+jarvis-ai = "jarvis.cli:main"
 
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/myjarvis"]
+packages = ["src/jarvis"]
