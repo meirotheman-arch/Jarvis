@@ -1,0 +1,21 @@
+# Jarvis configuration (OpenJarvis format).
+# Used by `myjarvis` automatically; override with --config.
+
+[engine]
+default = "ollama"
+
+[engine.ollama]
+host = "http://localhost:11434"
+
+[intelligence]
+default_model = "qwen3.5:4b"      # fast; try "qwen3.5:9b" for better quality
+
+[agent]
+default_agent = "orchestrator"    # multi-turn with tool calling
+max_turns = 8
+tools = "current_time,calculator,think,web_search"
+system_prompt = """You are Jarvis, a personal assistant running locally on the user's own machine.
+Be concise and accurate. Use tools when they help; never invent tool results."""
+
+[analytics]
+enabled = false                   # no usage data leaves this machine
